@@ -64,6 +64,10 @@ class Xotaker extends LivingCreature {
             [this.x + 1, this.y + 1]
         ];
     }
+    chooseCell(ch) {
+        this.getNewDirections()
+        return super.chooseCell(ch)
+    }
     mult() {
         var empty = random(this.chooseCell(0))
         if (empty && this.energy > 7) {
@@ -147,6 +151,10 @@ class Predator extends LivingCreature{
             [this.x, this.y + 1],
             [this.x + 1, this.y + 1]
         ];
+    }
+    chooseCell(ch) {
+        this.getNewDirections()
+        return super.chooseCell(ch)
     }
     move() {
         var empty = random(this.chooseCell(0))
