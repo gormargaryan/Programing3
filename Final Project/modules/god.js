@@ -1,5 +1,10 @@
 // GOD 5
-module.exports = class God extends LivingCreature {
+var LiveForm = require('./LiveForm.js')
+var random = require("./random");
+
+
+
+module.exports = class God extends LiveForm {
     constructor(x, y, index) {
         super(x, y, index);
         this.energy = 100;

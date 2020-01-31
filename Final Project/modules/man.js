@@ -1,7 +1,12 @@
 // MAN 4
-module.exports = class Man extends LivingCreature{
-    constructor(x, y, index) {
-        super(x, y, index);
+var LiveForm = require('./LiveForm.js')
+var random = require("./random");
+
+
+
+module.exports = class Man extends LiveForm{
+    constructor(x, y) {
+        super(x, y);
         this.energy = 10;
         this.directions = [
             [this.x - 2, this.y - 2],
