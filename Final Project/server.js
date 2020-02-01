@@ -22,14 +22,14 @@ grassHashiv = 0;
 predatorHashiv = 0;
 manHashiv = 0
 godHashiv = 0
-grasseaterHashiv = 0
+grassEaterHashiv = 0
 //! Setting global arrays  -- END
 
 
 
 
 //! Creating MATRIX -- START
-function matrixGenerator(matrixSize, grass, grassEater, grassEaterEater, waterArr, fireArr) {
+function matrixGenerator(matrixSize, grass, grassEater, predator, man, god) {
     for (let i = 0; i < matrixSize; i++) {
         matrix[i] = [];
         for (let o = 0; o < matrixSize; o++) {
@@ -46,23 +46,23 @@ function matrixGenerator(matrixSize, grass, grassEater, grassEaterEater, waterAr
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 2;
     }
-    for (let i = 0; i < grassEaterEater; i++) {
+    for (let i = 0; i < predator; i++) {
         let customX = Math.floor(random(matrixSize));
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 3;
     }
-    for (let i = 0; i < waterArr; i++) {
+    for (let i = 0; i < man; i++) {
         let customX = Math.floor(random(matrixSize));
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 4;
     }
-    for (let i = 0; i < fireArr; i++) {
+    for (let i = 0; i < god; i++) {
         let customX = Math.floor(random(matrixSize));
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 5;
     }
 }
-matrixGenerator(20, 1, 1);
+matrixGenerator(20, 5, 20, 20, 0, 0);
 //! Creating MATRIX -- END
 
 
@@ -87,7 +87,7 @@ function creatingObjects() {
             if (matrix[y][x] == 2) {
                 var grassEater = new GrassEater(x, y);
                 grassEaterArr.push(grassEater);
-                grasseaterHashiv++
+                grassEaterHashiv++
             } else if (matrix[y][x] == 1) {
                 var grass = new Grass(x, y);
                 grassArr.push(grass);
@@ -126,12 +126,26 @@ function game() {
             predatorArr[i].eat()
         }
     }
+    if (manArr[0] !== undefined) {
+        for (var i in manArr) {
+            manArr[i].eat()
+        }
+    }
+    // if (godArr[0] !== undefined) {
+    //     for (var i in godArr) {
+
+    //     }
+    // }
 
     //! Object to send
     let sendData = {
         matrix: matrix,
-        grassCounter: grassHashiv
+        grassCounter: grassHashiv,
+        grassEaterCounter: grassEaterHashiv,
+        predatorCounter: predatorHashiv
     }
+    
+    
 
     //! Send data over the socket to clients who listens "data"
     io.sockets.emit("data", sendData);

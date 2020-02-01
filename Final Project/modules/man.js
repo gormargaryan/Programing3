@@ -36,89 +36,99 @@ module.exports = class Man extends LiveForm{
         return super.chooseCell(ch)
     }
     move() {
-        var empty = random(this.chooseCell(0))
+        let emptyCells = this.chooseCell(0);
+        let newCell = random(emptyCells);
+
         this.energy -= 3
-        if (empty) {
-            var newx = empty[0]
-            var newy = empty[1]
+        if (newCell) {
+            let newx = empty[0]
+            let newy = empty[1]
             matrix[newy][newx] = 4
             matrix[this.y][this.x] = 0
             this.x = newx
             this.y = newy
         }
+        if (this.energy <= -50) {
+            this.die()
+        }
     }
-    mult() {
-        var empty = random(this.chooseCell(0))
-        if (empty && this.energy > 15) {
-            var newx = empty[0]
-            var newy = empty[1]
+    mul() {
+        let emptyCells = this.chooseCell(0)
+        let newCell = random(emptyCells)
+        if (newCell) {
+            let newx = empty[0]
+            let newy = empty[1]
             matrix[newy][newx] = 4;
-            var newmn = new Man(newx, newy, 4)
+            let newmn = new Man(newx, newy, 4)
             manarr.push(newmn)
         }
     }
     eat() {
-        var xk = random(this.chooseCell(2))
-        var veg = random(this.chooseCell(1))
-
-        if (xk) { // - xotaker
-            var newx = xk[0]
-            var newy = xk[1]
-            matrix[newy][newx] = 4
-            matrix[this.y][this.x] = 0
-
-            for (var i in xotakerarr) {
-                if (xotakerarr[i].x == newx && xotakerarr[i].y == newy) {
-                    xotakerarr.splice(i, 1)
+        let emptyCells2 = this.chooseCell(2);
+        let emptyCells1 = this.chooseCell(1);
+        if (emptyCells1 && emptyCells2) {
+            let greater = random(emptyCells2)
+            if (greater) {
+                let newx = greater[0]
+                let newy = greater[1]
+                matrix[newy][newx] = 4
+                matrix[this.y][this.x] = 0
+                for (var i in grassEaterArr) {
+                    if (grassEaterArr[i].x == newx && grassEaterArr[i].y == newy) {
+                        grassEaterArr.splice(i, 1)
+                    }
+                }
+                this.x = newx
+                this.y = newy
+                this.energy += 4
+                if (this.energy >= 20) {
+                    this.plant()
+                } else if (this.energy >= 15) {
+                    this.mul()
                 }
             }
-            this.x = newx
-            this.y = newy
-            this.energy += 4
-        }
+            let gr = random(emptyCells1)
+            if (gr) {
+                let newx = gr[0]
+                let newy = gr[1]
+                matrix[newy][newx] = 4
+                matrix[this.y][this.x] = 0
 
-        else if (veg) { // - grass
-            var newx = veg[0]
-            var newy = veg[1]
-            matrix[newy][newx] = 4
-            matrix[this.y][this.x] = 0
-
-            for (var i in grassarr) {
-                if (grassarr[i].x == newx && grassarr[i].y == newy) {
-                    grassarr.splice(i, 1)
+                for (var i in grassArr) {
+                    if (grassArr[i].x == newx && grassArr[i].y == newy) {
+                        grassArr.splice(i, 1)
+                    }
+                }
+                this.x = newx
+                this.y = newy
+                this.energy += 2
+                if (this.energy >= 20) {
+                    this.plant()
+                } else if (this.energy >= 15) {
+                    this.mul()
                 }
             }
-            this.x = newx
-            this.y = newy
-            this.energy += 2
+        } else {
+            this.move()
         }
+
     }
-    create() {
-        var emp = random(this.chooseCell(0))
+    plant() {
+        let emptyCells = this.chooseCell(0);
+        let newCell = random(emptyCells);
 
-        if (emp && this.energy >= 15) { // - man
-            var x = emp[0]
-            var y = emp[1]
+        if (newCell) {
+            let x = newCell[0]
+            let y = newCell[1]
             matrix[y][x] = 1
-            grassarr.push(new Grass(x, y))
-            // var zm = new Zombie(newx,newy)
-            // zombarr.push(zm)
-            // for (var i in manarr) {
-            //     if (manarr[i].x == x && manarr[i].y == y) {
-            //         manarr.push(new Man(newx,newy))
-            //     }
-            // }
-            // this.x = newx
-            // this.y = newy
+            grassArr.push(new Grass(x, y))
         }
     }
     die() {
-        if (this.energy <= -50) {
-            matrix[this.y][this.x] = 0
-            for (var i in manarr) {
-                if (manarr[i].x == this.x && manarr[i].y == this.y) {
-                    manarr.splice(i, 1)
-                }
+        matrix[this.y][this.x] = 0
+        for (var i in manArr) {
+            if (manArr[i].x == this.x && manArr[i].y == this.y) {
+                manArr.splice(i, 1)
             }
         }
     }

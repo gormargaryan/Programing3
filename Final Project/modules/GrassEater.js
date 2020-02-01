@@ -34,6 +34,7 @@ module.exports = class GrassEater extends LiveForm {
             matrix[y][x] = 2;
             let grassEater = new GrassEater(x, y);
             grassEaterArr.push(grassEater);
+            grassEaterHashiv++
             this.energy = 5;
         }
     }
@@ -50,7 +51,7 @@ module.exports = class GrassEater extends LiveForm {
             matrix[y][x] = 2;
             matrix[this.y][this.x] = 0;
 
-            for (let i in grassArr) {
+            for (var i in grassArr) {
                 if (grassArr[i].x == x && grassArr[i].y == y) {
                     grassArr.splice(i, 1)
                 }
