@@ -1,13 +1,14 @@
 // MAN 4
 var LiveForm = require('./LiveForm.js')
 var random = require("./random");
+var Grass = require("./Grass.js")
 
 
 
 module.exports = class Man extends LiveForm{
     constructor(x, y) {
         super(x, y);
-        this.energy = 10;
+        this.energy = 30;
         this.directions = [
             [this.x - 2, this.y - 2],
             [this.x, this.y - 2],
@@ -41,8 +42,8 @@ module.exports = class Man extends LiveForm{
 
         this.energy -= 3
         if (newCell) {
-            let newx = empty[0]
-            let newy = empty[1]
+            let newx = newCell[0]
+            let newy = newCell[1]
             matrix[newy][newx] = 4
             matrix[this.y][this.x] = 0
             this.x = newx
@@ -56,21 +57,21 @@ module.exports = class Man extends LiveForm{
         let emptyCells = this.chooseCell(0)
         let newCell = random(emptyCells)
         if (newCell) {
-            let newx = empty[0]
-            let newy = empty[1]
+            let newx = newCell[0]
+            let newy = newCell[1]
             matrix[newy][newx] = 4;
             let newmn = new Man(newx, newy, 4)
-            manarr.push(newmn)
+            manArr.push(newmn)
+            manHashiv++
         }
     }
     eat() {
-        let emptyCells2 = this.chooseCell(2);
-        let emptyCells1 = this.chooseCell(1);
-        if (emptyCells1 && emptyCells2) {
-            let greater = random(emptyCells2)
-            if (greater) {
-                let newx = greater[0]
-                let newy = greater[1]
+        let food = random(this.chooseCell(1));
+        let moretastyfood = random(this.chooseCell(2));
+        if (moretastyfood || food) {
+            if (moretastyfood) {
+                let newx = moretastyfood[0]
+                let newy = moretastyfood[1]
                 matrix[newy][newx] = 4
                 matrix[this.y][this.x] = 0
                 for (var i in grassEaterArr) {
@@ -87,10 +88,9 @@ module.exports = class Man extends LiveForm{
                     this.mul()
                 }
             }
-            let gr = random(emptyCells1)
-            if (gr) {
-                let newx = gr[0]
-                let newy = gr[1]
+            if (food) {
+                let newx = food[0]
+                let newy = food[1]
                 matrix[newy][newx] = 4
                 matrix[this.y][this.x] = 0
 
@@ -101,13 +101,13 @@ module.exports = class Man extends LiveForm{
                 }
                 this.x = newx
                 this.y = newy
-                this.energy += 2
+                this.energy += 1
                 if (this.energy >= 20) {
                     this.plant()
                 } else if (this.energy >= 15) {
                     this.mul()
                 }
-            }
+            }    
         } else {
             this.move()
         }
@@ -116,12 +116,16 @@ module.exports = class Man extends LiveForm{
     plant() {
         let emptyCells = this.chooseCell(0);
         let newCell = random(emptyCells);
+        // console.log("man's on");
+        
 
         if (newCell) {
             let x = newCell[0]
             let y = newCell[1]
             matrix[y][x] = 1
             grassArr.push(new Grass(x, y))
+            grassHashiv++
+            // console.log("man's on");
         }
     }
     die() {

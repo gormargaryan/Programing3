@@ -29,7 +29,7 @@ grassEaterHashiv = 0
 
 
 //! Creating MATRIX -- START
-function matrixGenerator(matrixSize, grass, grassEater, predator, man, god) {
+function matrixGenerator(matrixSize, grass, grassEater, predator, man) {
     for (let i = 0; i < matrixSize; i++) {
         matrix[i] = [];
         for (let o = 0; o < matrixSize; o++) {
@@ -56,13 +56,17 @@ function matrixGenerator(matrixSize, grass, grassEater, predator, man, god) {
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 4;
     }
-    for (let i = 0; i < god; i++) {
+    if(manArr.length == 0) {
         let customX = Math.floor(random(matrixSize));
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 5;
+        // godHashiv++
+        // console.log(manArr.length);
+        
     }
+    
 }
-matrixGenerator(20, 5, 20, 20, 0, 0);
+matrixGenerator(20, 20, 20, 20, 10);
 //! Creating MATRIX -- END
 
 
@@ -96,7 +100,7 @@ function creatingObjects() {
                 var predator = new Predator(x, y);
                 predatorArr.push(predator);
                 predatorHashiv++
-            } else if (matrix[y][x] == 4) {
+            } else if (matrix[y][x] == 4){
                 var man = new Man(x, y)
                 manArr.push(man)
                 manHashiv++
@@ -104,6 +108,8 @@ function creatingObjects() {
                 var god = new God(x, y)
                 godArr.push(god)
                 godHashiv++
+                console.log(godHashiv);
+                
             }
         }
     }
@@ -131,18 +137,20 @@ function game() {
             manArr[i].eat()
         }
     }
-    // if (godArr[0] !== undefined) {
-    //     for (var i in godArr) {
-
-    //     }
-    // }
+    if (godArr[0] !== undefined) {
+        for (var i in godArr) {
+            godArr[i].create()
+        }
+    }
 
     //! Object to send
     let sendData = {
         matrix: matrix,
         grassCounter: grassHashiv,
         grassEaterCounter: grassEaterHashiv,
-        predatorCounter: predatorHashiv
+        predatorCounter: predatorHashiv,
+        manCounter: manHashiv,
+        godCounter: godHashiv
     }
     
     

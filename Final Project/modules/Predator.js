@@ -54,52 +54,48 @@ module.exports = class Predator extends LiveForm{
     eat() {
         let food = random(this.chooseCell(2))
         let moretastyfood = random(this.chooseCell(4))
-        if (food) {
-            let newx = food[0]
-            let newy = food[1]
-            matrix[newy][newx] = 3
-            matrix[this.y][this.x] = 0
-    
-            for (var i in grassEaterArr) {
-                if (grassEaterArr[i].x == newx && grassEaterArr[i].y == newy) {
-                    grassEaterArr.splice(i, 1)
+        
+        
+        if (food || moretastyfood) {
+            if (food) {
+                let newx = food[0]
+                let newy = food[1]
+                matrix[newy][newx] = 3
+                matrix[this.y][this.x] = 0
+        
+                for (var i in grassEaterArr) {
+                    if (grassEaterArr[i].x == newx && grassEaterArr[i].y == newy) {
+                        grassEaterArr.splice(i, 1)
+                    }
+                }
+                this.x = newx
+                this.y = newy
+                this.energy += 2
+                if (this.energy >= 15) {
+                    this.mul()
                 }
             }
-            this.x = newx
-            this.y = newy
-            this.energy += 2
-            if (this.energy >= 15) {
-                this.mul()
+            else if (moretastyfood) {
+                let newx = moretastyfood[0]
+                let newy = moretastyfood[1]
+                matrix[newy][newx] = 3
+                matrix[this.y][this.x] = 0
+                for (var i in manArr) {
+                    if (manArr[i].x == newx && manArr[i].y == newy) {
+                        manArr.splice(i, 1)
+                    }
+                }
+                this.x = newx
+                this.y = newy
+                this.energy += 5
+                if (this.energy >= 15) {
+                    this.mul()
+                }
             }
+            
         } else {
             this.move()
         }
-        
-        if (moretastyfood) {
-            let newx = moretastyfood[0]
-            let newy = moretastyfood[1]
-            matrix[newy][newx] = 3
-            matrix[this.y][this.x] = 0
-            for (var i in manArr) {
-                if (manArr[i].x == newx && manArr[i].y == newy) {
-                    manArr.splice(i, 1)
-                }
-            }
-            this.x = newx
-            this.y = newy
-            this.energy += 5
-            if (this.energy >= 15) {
-                this.mul()
-            }
-        } else {
-            this.move()
-        }
-        // } else {
-        //     this.move()
-        // }
-        
-        // let emptycells = this.chooseCell(4);
-        // let moretastyfood = random(emptycells);
         
     }
     die() {

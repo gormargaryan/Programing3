@@ -12,7 +12,8 @@ function setup() {
     let grassCountElement = document.getElementById('grassCount');
     let grassEaterCountElement = document.getElementById('grassEaterCount');
     let predatorCountElement = document.getElementById('predatorCount');
-
+    let manCountElement = document.getElementById('manCount')
+    let godCountElement = document.getElementById('godCount')
     //! adding socket listener on "data" <-- name, after that fire 'drawCreatures' function 
 
     socket.on("data", drawCreatures);
@@ -23,7 +24,10 @@ function setup() {
         matrix = data.matrix;
         grassCountElement.innerText = data.grassCounter;
         grassEaterCountElement.innerText = data.grassEaterCounter;
-        predatorCountElement.innerText = data.predatorCounter
+        predatorCountElement.innerText = data.predatorCounter;
+        manCountElement.innerText = data.manCounter;
+        godCountElement.innerText = document.godCounter
+
         
         //! Every time it creates new Canvas woth new matrix size
         createCanvas(matrix[0].length * side, matrix.length * side)
@@ -47,7 +51,7 @@ function setup() {
                     fill('red');
                     rect(j * side, i * side, side, side);
                 } else if (matrix[i][j] == 4) {
-                    fill('blue');
+                    fill('#dbc78f');
                     rect(j * side, i * side, side, side);
                 } else if (matrix[i][j] == 5) {
                     fill('white');

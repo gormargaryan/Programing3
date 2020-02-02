@@ -1,7 +1,7 @@
 // GOD 5
 var LiveForm = require('./LiveForm.js')
 var random = require("./random");
-
+var Man = require("./Man.js")
 
 
 module.exports = class God extends LiveForm {
@@ -36,35 +36,45 @@ module.exports = class God extends LiveForm {
         return super.chooseCell(ch)
     }
     move() {
-        var empty = random(this.chooseCell(0))
+        let emptyCells = this.chooseCell(0);
+        let newCell = random(emptyCells);        
         this.energy -= 5
-        if (empty) {
-            var newx = empty[0]
-            var newy = empty[1]
+        if (newCell) {
+            let newx = newCell[0]
+            let newy = newCell[1]
             matrix[newy][newx] = 5
             matrix[this.y][this.x] = 0
             this.x = newx
             this.y = newy
+            console.log("god's moving");
+        }
+        if (this.energy <= 0) {
+            this.disappear()
         }
     }
     create() {
-        var man = random(this.chooseCell(0))
-
-        if (man) { // - man
-            var x = man[0]
-            var y = man[1]
+        // var man = random(this.chooseCell(0))
+        
+        
+        let emptyCells = this.chooseCell(0);
+        let newCell = random(emptyCells);
+        if (newCell) { // - man
+            let x = newCell[0]
+            let y = newCell[1]
             matrix[y][x] = 4
-            manarr.push(new Man(x, y))
+            manArr.push(new Man(x, y))
+            manHashiv++
             this.energy += 6
+            // console.log("god's on");
+        } else {
+            this.move()
         }
     }
     disappear() {
-        if (this.energy <= 0) {
-            matrix[this.y][this.x] = 0
-            for (var i in godarr) {
-                if (godarr[i].x == this.x && godarr[i].y == this.y) {
-                    godarr.splice(i, 1)
-                }
+        matrix[this.y][this.x] = 0
+        for (var i in godArr) {
+            if (godArr[i].x == this.x && godArr[i].y == this.y) {
+                godArr.splice(i, 1)
             }
         }
     }
