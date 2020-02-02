@@ -5,8 +5,8 @@ var Man = require("./Man.js")
 
 
 module.exports = class God extends LiveForm {
-    constructor(x, y, index) {
-        super(x, y, index);
+    constructor(x, y) {
+        super(x, y);
         this.energy = 100;
         this.directions = [
             [this.x - 2, this.y - 2],

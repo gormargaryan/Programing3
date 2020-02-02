@@ -1,57 +1,27 @@
-// MAN 4
 var LiveForm = require('./LiveForm.js')
 var random = require("./random");
-var Grass = require("./Grass.js")
+var Zombie = require("./Zombie")
 
-
-
-module.exports = class Man extends LiveForm{
+module.exports = class Doctor extends LiveForm {
     constructor(x, y) {
-        super(x, y);
-        this.energy = 30;
-        this.directions = [
-            [this.x - 2, this.y - 2],
-            [this.x, this.y - 2],
-            [this.x + 2, this.y - 2],
-            [this.x - 2, this.y],
-            [this.x + 2, this.y],
-            [this.x - 2, this.y + 2],
-            [this.x, this.y + 2],
-            [this.x + 2, this.y + 2]
-        ];
+        super(x, y)
+        this.energy = 20
     }
     getNewDirections() {
         this.directions = [
-            [this.x - 2, this.y - 2],
-            [this.x, this.y - 2],
-            [this.x + 2, this.y - 2],
-            [this.x - 2, this.y],
-            [this.x + 2, this.y],
-            [this.x - 2, this.y + 2],
-            [this.x, this.y + 2],
-            [this.x + 2, this.y + 2]
+            [this.x - 1, this.y - 1],
+            [this.x, this.y - 1],
+            [this.x + 1, this.y - 1],
+            [this.x - 1, this.y],
+            [this.x + 1, this.y],
+            [this.x - 1, this.y + 1],
+            [this.x, this.y + 1],
+            [this.x + 1, this.y + 1]
         ];
     }
     chooseCell(ch) {
         this.getNewDirections()
         return super.chooseCell(ch)
-    }
-    move() {
-        let emptyCells = this.chooseCell(0);
-        let newCell = random(emptyCells);
-
-        this.energy -= 3
-        if (newCell) {
-            let newx = newCell[0]
-            let newy = newCell[1]
-            matrix[newy][newx] = 4
-            matrix[this.y][this.x] = 0
-            this.x = newx
-            this.y = newy
-        }
-        if (this.energy <= -50) {
-            this.die()
-        }
     }
     mul() {
         let emptyCells = this.chooseCell(0)
@@ -59,10 +29,10 @@ module.exports = class Man extends LiveForm{
         if (newCell) {
             let newx = newCell[0]
             let newy = newCell[1]
-            matrix[newy][newx] = 4;
-            let newmn = new Man(newx, newy)
-            manArr.push(newmn)
-            manHashiv++
+            matrix[newy][newx] = 7;
+            let newdc = new Doctor(newx, newy)
+            doctorArr.push(newdc)
+            doctorHashiv++
         }
     }
     eat() {
@@ -72,7 +42,7 @@ module.exports = class Man extends LiveForm{
             if (moretastyfood) {
                 let newx = moretastyfood[0]
                 let newy = moretastyfood[1]
-                matrix[newy][newx] = 4
+                matrix[newy][newx] = 7
                 matrix[this.y][this.x] = 0
                 for (var i in grassEaterArr) {
                     if (grassEaterArr[i].x == newx && grassEaterArr[i].y == newy) {
@@ -82,16 +52,16 @@ module.exports = class Man extends LiveForm{
                 this.x = newx
                 this.y = newy
                 this.energy += 4
-                if (this.energy >= 20) {
-                    this.plant()
-                } else if (this.energy >= 15) {
+                if (this.energy >= 30) {
                     this.mul()
+                } else if (this.energy >= 15) {
+                    this.create()
                 }
             }
             if (food) {
                 let newx = food[0]
                 let newy = food[1]
-                matrix[newy][newx] = 4
+                matrix[newy][newx] = 7
                 matrix[this.y][this.x] = 0
 
                 for (var i in grassArr) {
@@ -102,10 +72,10 @@ module.exports = class Man extends LiveForm{
                 this.x = newx
                 this.y = newy
                 this.energy += 1
-                if (this.energy >= 20) {
-                    this.plant()
-                } else if (this.energy >= 15) {
+                if (this.energy >= 30) {
                     this.mul()
+                } else if (this.energy >= 15) {
+                    this.create()
                 }
             }    
         } else {
@@ -113,26 +83,43 @@ module.exports = class Man extends LiveForm{
         }
 
     }
-    plant() {
+    move() {
         let emptyCells = this.chooseCell(0);
         let newCell = random(emptyCells);
-        
+
+        this.energy -= 3
+        if (newCell) {
+            let newx = newCell[0]
+            let newy = newCell[1]
+            matrix[newy][newx] = 7
+            matrix[this.y][this.x] = 0
+            this.x = newx
+            this.y = newy
+        }
+        if (this.energy <= -25) {
+            this.die()
+        }
+    }
+    create() {
+        let emptyCells = this.chooseCell(0);
+        let newCell = random(emptyCells);
+
         if (newCell) {
             let x = newCell[0]
             let y = newCell[1]
-            matrix[y][x] = 1
-            var gr = new Grass(x, y)
-            grassArr.push(gr)
-            grassHashiv++
-            this.energy -= 10
-            // console.log("man's on");
+            matrix[y][x] = 6
+            var zm = new Zombie(x, y)
+            zombieArr.push(zm)
+            zombieHashiv++
+            this.energy -= 5
+            console.log("done");
         }
     }
     die() {
         matrix[this.y][this.x] = 0
-        for (var i in manArr) {
-            if (manArr[i].x == this.x && manArr[i].y == this.y) {
-                manArr.splice(i, 1)
+        for (var i in doctorArr) {
+            if (doctorArr[i].x == this.x && doctorArr[i].y == this.y) {
+                doctorArr.splice(i, 1)
             }
         }
     }

@@ -5,6 +5,8 @@ var GrassEater = require("./modules/GrassEater.js");
 var Predator = require('./modules/Predator.js');
 var Man = require('./modules/Man.js');
 var God = require('./modules/God.js');
+var Zombie = require("./modules/Zombie.js");
+var Doctor = require("./modules/Doctor.js")
 let random = require('./modules/random');
 //! Requiring modules  --  END
 
@@ -15,6 +17,8 @@ grassEaterArr = [];
 predatorArr = [];
 manArr = [];
 godArr = []
+zombieArr = []
+doctorArr = []
 
 matrix = [];
 
@@ -23,13 +27,15 @@ predatorHashiv = 0;
 manHashiv = 0
 godHashiv = 0
 grassEaterHashiv = 0
+zombieHashiv = 0
+doctorHashiv = 0
 //! Setting global arrays  -- END
 
 
 
 
 //! Creating MATRIX -- START
-function matrixGenerator(matrixSize, grass, grassEater, predator, man) {
+function matrixGenerator(matrixSize, grass, grassEater, predator, man, zombie, doctor) {
     for (let i = 0; i < matrixSize; i++) {
         matrix[i] = [];
         for (let o = 0; o < matrixSize; o++) {
@@ -56,17 +62,29 @@ function matrixGenerator(matrixSize, grass, grassEater, predator, man) {
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 4;
     }
+    for (let i = 0; i < zombie; i++) {
+        let customX = Math.floor(random(matrixSize));
+        let customY = Math.floor(random(matrixSize));
+        matrix[customY][customX] = 6;
+    }
+    for (let i = 0; i < doctor; i++) {
+        let customX = Math.floor(random(matrixSize));
+        let customY = Math.floor(random(matrixSize));
+        matrix[customY][customX] = 7;
+    }
+
+
     if(manArr.length == 0) {
         let customX = Math.floor(random(matrixSize));
         let customY = Math.floor(random(matrixSize));
-        matrix[customY][customX] = 5;
-        // godHashiv++
-        // console.log(manArr.length);
-        
+        matrix[customY][customX] = 5;        
     }
+
+
+    
     
 }
-matrixGenerator(20, 20, 20, 20, 10);
+matrixGenerator(20, 1, 1, 1, 1, 1, 10);
 //! Creating MATRIX -- END
 
 
@@ -108,8 +126,16 @@ function creatingObjects() {
                 var god = new God(x, y)
                 godArr.push(god)
                 godHashiv++
-                console.log(godHashiv);
+                // console.log(godHashiv);
                 
+            } else if (matrix[y][x] == 6) {
+                var zombie = new Zombie(x, y)
+                zombieArr.push(zombie)
+                zombieHashiv++
+            } else if (matrix[y][x] == 7) {
+                var doctor = new Doctor(x, y)
+                doctorArr.push(doctor)
+                doctorHashiv++
             }
         }
     }
@@ -142,6 +168,16 @@ function game() {
             godArr[i].create()
         }
     }
+    if (zombieArr[0] !== undefined) {
+        for (var i in zombieArr) {
+            zombieArr[i].infect()
+        }
+    }
+    if (doctorArr[0] !== undefined) {
+        for (var i in doctorArr) {
+            doctorArr[i].eat()
+        }
+    }
 
     //! Object to send
     let sendData = {
@@ -150,7 +186,8 @@ function game() {
         grassEaterCounter: grassEaterHashiv,
         predatorCounter: predatorHashiv,
         manCounter: manHashiv,
-        godCounter: godHashiv
+        godCounter: godHashiv,
+        zombieCounter: zombieHashiv
     }
     
     

@@ -12,8 +12,12 @@ function setup() {
     let grassCountElement = document.getElementById('grassCount');
     let grassEaterCountElement = document.getElementById('grassEaterCount');
     let predatorCountElement = document.getElementById('predatorCount');
-    let manCountElement = document.getElementById('manCount')
-    let godCountElement = document.getElementById('godCount')
+    let manCountElement = document.getElementById('manCount');
+    let godCountElement = document.getElementById('godCount');
+    let zombieCountElement = document.getElementById('zombieCount')
+
+    
+    
     //! adding socket listener on "data" <-- name, after that fire 'drawCreatures' function 
 
     socket.on("data", drawCreatures);
@@ -26,7 +30,8 @@ function setup() {
         grassEaterCountElement.innerText = data.grassEaterCounter;
         predatorCountElement.innerText = data.predatorCounter;
         manCountElement.innerText = data.manCounter;
-        godCountElement.innerText = document.godCounter
+        godCountElement.innerText = data.godCounter;
+        zombieCountElement.innerText = data.zombieCounter;
 
         
         //! Every time it creates new Canvas woth new matrix size
@@ -56,8 +61,16 @@ function setup() {
                 } else if (matrix[i][j] == 5) {
                     fill('white');
                     rect(j * side, i * side, side, side);
+                } else if (matrix[i][j] == 6) {
+                    fill('#5c0b06');
+                    rect(j * side, i * side, side, side);
+                }else if (matrix[i][j] == 7) {
+                    fill('#6b0bba');
+                    rect(j * side, i * side, side, side);
                 }
+                
             }
         }
     }
+    
 }
