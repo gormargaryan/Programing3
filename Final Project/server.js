@@ -74,17 +74,16 @@ function matrixGenerator(matrixSize, grass, grassEater, predator, man, zombie, d
     }
 
 
-    if(manArr.length == 0) {
-        let customX = Math.floor(random(matrixSize));
-        let customY = Math.floor(random(matrixSize));
-        matrix[customY][customX] = 5;        
-    }
-
-
+    // if(manArr.length == 0) {
+    //     let customX = Math.floor(random(matrixSize));
+    //     let customY = Math.floor(random(matrixSize));
+    //     matrix[customY][customX] = 5     
+    // }
     
+
     
 }
-matrixGenerator(20, 1, 1, 1, 1, 1, 10);
+matrixGenerator(20, 10, 10, 10, 10, 10, 4);
 //! Creating MATRIX -- END
 
 
@@ -187,7 +186,8 @@ function game() {
         predatorCounter: predatorHashiv,
         manCounter: manHashiv,
         godCounter: godHashiv,
-        zombieCounter: zombieHashiv
+        zombieCounter: zombieHashiv,
+        doctorCounter: doctorHashiv
     }
     
     

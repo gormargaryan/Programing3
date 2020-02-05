@@ -52,9 +52,10 @@ module.exports = class Doctor extends LiveForm {
                 this.x = newx
                 this.y = newy
                 this.energy += 4
-                if (this.energy >= 30) {
+                if (this.energy >=25) {
                     this.mul()
-                } else if (this.energy >= 15) {
+                } 
+                else if (this.energy >= 15) {
                     this.create()
                 }
             }
@@ -71,10 +72,11 @@ module.exports = class Doctor extends LiveForm {
                 }
                 this.x = newx
                 this.y = newy
-                this.energy += 1
-                if (this.energy >= 30) {
+                this.energy++
+                if (this.energy >= 25) {
                     this.mul()
-                } else if (this.energy >= 15) {
+                } 
+                else if (this.energy >= 15) {
                     this.create()
                 }
             }    
@@ -112,7 +114,7 @@ module.exports = class Doctor extends LiveForm {
             zombieArr.push(zm)
             zombieHashiv++
             this.energy -= 5
-            console.log("done");
+            // console.log("done");
         }
     }
     die() {

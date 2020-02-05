@@ -15,7 +15,7 @@ function setup() {
     let manCountElement = document.getElementById('manCount');
     let godCountElement = document.getElementById('godCount');
     let zombieCountElement = document.getElementById('zombieCount')
-
+    let doctorCountElement = document.getElementById('doctorCount')
     
     
     //! adding socket listener on "data" <-- name, after that fire 'drawCreatures' function 
@@ -32,7 +32,7 @@ function setup() {
         manCountElement.innerText = data.manCounter;
         godCountElement.innerText = data.godCounter;
         zombieCountElement.innerText = data.zombieCounter;
-
+        doctorCountElement.innerText = data.doctorCounter
         
         //! Every time it creates new Canvas woth new matrix size
         createCanvas(matrix[0].length * side, matrix.length * side)

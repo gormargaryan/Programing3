@@ -1,7 +1,7 @@
 // GOD 5
 var LiveForm = require('./LiveForm.js')
 var random = require("./random");
-var Man = require("./Man.js")
+
 
 
 module.exports = class God extends LiveForm {
@@ -55,6 +55,7 @@ module.exports = class God extends LiveForm {
     create() {
         // var man = random(this.chooseCell(0))
         
+        var Man = require("./Man.js")
         
         let emptyCells = this.chooseCell(0);
         let newCell = random(emptyCells);
@@ -64,12 +65,13 @@ module.exports = class God extends LiveForm {
             matrix[y][x] = 4
             manArr.push(new Man(x, y))
             manHashiv++
-            this.energy += 6
+            this.energy -= 5
             // console.log("god's on");
         } else {
             this.move()
         }
     }
+
     disappear() {
         matrix[this.y][this.x] = 0
         for (var i in godArr) {

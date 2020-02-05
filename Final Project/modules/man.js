@@ -1,7 +1,7 @@
 // MAN 4
 var LiveForm = require('./LiveForm.js')
 var random = require("./random");
-var Grass = require("./Grass.js")
+var God = require("./God.js")
 
 
 
@@ -82,9 +82,7 @@ module.exports = class Man extends LiveForm{
                 this.x = newx
                 this.y = newy
                 this.energy += 4
-                if (this.energy >= 20) {
-                    this.plant()
-                } else if (this.energy >= 15) {
+                if (this.energy >= 35) {
                     this.mul()
                 }
             }
@@ -102,9 +100,7 @@ module.exports = class Man extends LiveForm{
                 this.x = newx
                 this.y = newy
                 this.energy += 1
-                if (this.energy >= 20) {
-                    this.plant()
-                } else if (this.energy >= 15) {
+                if (this.energy >= 15) {
                     this.mul()
                 }
             }    
@@ -113,27 +109,33 @@ module.exports = class Man extends LiveForm{
         }
 
     }
-    plant() {
-        let emptyCells = this.chooseCell(0);
-        let newCell = random(emptyCells);
+    // plant() {
+    //     let emptyCells = this.chooseCell(0);
+    //     let newCell = random(emptyCells);
         
-        if (newCell) {
-            let x = newCell[0]
-            let y = newCell[1]
-            matrix[y][x] = 1
-            var gr = new Grass(x, y)
-            grassArr.push(gr)
-            grassHashiv++
-            this.energy -= 10
-            // console.log("man's on");
-        }
-    }
+    //     if (newCell) {
+    //         let x = newCell[0]
+    //         let y = newCell[1]
+    //         matrix[y][x] = 1
+    //         var gr = new Grass(x, y)
+    //         grassArr.push(gr)
+    //         grassHashiv++
+    //         this.energy -= 10
+    //         // console.log("man's on");
+    //     }
+    // }
     die() {
         matrix[this.y][this.x] = 0
         for (var i in manArr) {
             if (manArr[i].x == this.x && manArr[i].y == this.y) {
                 manArr.splice(i, 1)
             }
+        }
+        if (manArr.length == 0 && manHashiv > 0) {
+            matrix[this.y][this.x] = 5
+            var gd = new God(this.x, this.y);
+            godArr.push(gd)
+            godHashiv++
         }
     }
 }

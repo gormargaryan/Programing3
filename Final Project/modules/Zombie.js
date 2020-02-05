@@ -46,7 +46,7 @@ module.exports = class Zombie extends LiveForm {
             }
             // this.x = newx
             // this.y = newy
-            matrix[this.y][this.x] = 6
+            // matrix[this.y][this.x] = 6
             this.energy += 10
             
         } else {
