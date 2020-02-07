@@ -24,11 +24,14 @@ module.exports = class Grass extends LiveForm {
         return super.chooseCell(character);
     }
     mul() {
+        // console.log(counter);
+        // console.log(weather);
+        
         this.multiply++;
         let emptyCells = this.chooseCell(0);
         let newCell = random(emptyCells);
 
-        if (newCell && this.multiply >= 2) {
+        if (newCell && this.multiply >= 2 && (weather == 'spring' || weather == 'summer')) {
             grassHashiv++;
             let x = newCell[0];
             let y = newCell[1];

@@ -29,6 +29,8 @@ godHashiv = 0
 grassEaterHashiv = 0
 zombieHashiv = 0
 doctorHashiv = 0
+weather = ''
+counter = 0
 //! Setting global arrays  -- END
 
 
@@ -83,7 +85,7 @@ function matrixGenerator(matrixSize, grass, grassEater, predator, man, zombie, d
 
     
 }
-matrixGenerator(20, 10, 10, 10, 10, 10, 4);
+matrixGenerator(20, 1, 5, 5, 5, 5, 5);
 //! Creating MATRIX -- END
 
 
@@ -142,6 +144,22 @@ function creatingObjects() {
 creatingObjects();
 
 function game() {
+    counter++
+    if(counter >= 0 && counter <= 10) {
+        weather = 'spring'
+    } else if (counter > 10 && counter <= 20) {
+        weather = 'summer'
+    } else if (counter > 20 && counter <= 30) {
+        weather = 'autumn'
+    } else if (counter > 30 && counter <= 40) {
+        weather = 'winter'
+    } else {
+        counter = 0
+    }
+
+
+
+
     if (grassArr[0] !== undefined) {
         for (var i in grassArr) {
             grassArr[i].mul();
@@ -187,7 +205,8 @@ function game() {
         manCounter: manHashiv,
         godCounter: godHashiv,
         zombieCounter: zombieHashiv,
-        doctorCounter: doctorHashiv
+        doctorCounter: doctorHashiv,
+        weather: weather
     }
     
     

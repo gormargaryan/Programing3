@@ -59,7 +59,7 @@ module.exports = class Zombie extends LiveForm {
         this.energy -= 5
         // console.log(zombieHashiv);
         
-        if (newCell) {
+        if (newCell && weather != 'winter') {
             let newx = newCell[0]
             let newy = newCell[1]
             matrix[newy][newx] = 6

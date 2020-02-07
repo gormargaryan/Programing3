@@ -42,7 +42,7 @@ module.exports = class Predator extends LiveForm{
     mul() {
         let emptyCells = this.chooseCell(0);
         let newCell = random(emptyCells);
-        if (newCell) {
+        if (newCell && weather == 'spring') {
             let newx = newCell[0]
             let newy = newCell[1]
             matrix[newy][newx] = 3;

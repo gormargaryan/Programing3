@@ -38,7 +38,7 @@ module.exports = class Doctor extends LiveForm {
     eat() {
         let food = random(this.chooseCell(1));
         let moretastyfood = random(this.chooseCell(2));
-        if (moretastyfood || food) {
+        if ((moretastyfood || food) && weather != 'winter') {
             if (moretastyfood) {
                 let newx = moretastyfood[0]
                 let newy = moretastyfood[1]
@@ -106,7 +106,7 @@ module.exports = class Doctor extends LiveForm {
         let emptyCells = this.chooseCell(0);
         let newCell = random(emptyCells);
 
-        if (newCell) {
+        if (newCell && weather == "spring") {
             let x = newCell[0]
             let y = newCell[1]
             matrix[y][x] = 6

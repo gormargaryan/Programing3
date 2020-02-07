@@ -39,9 +39,7 @@ module.exports = class Man extends LiveForm{
     move() {
         let emptyCells = this.chooseCell(0);
         let newCell = random(emptyCells);
-
-        this.energy -= 3
-        if (newCell) {
+        if (newCell && weather != 'winter') {
             let newx = newCell[0]
             let newy = newCell[1]
             matrix[newy][newx] = 4
@@ -109,21 +107,6 @@ module.exports = class Man extends LiveForm{
         }
 
     }
-    // plant() {
-    //     let emptyCells = this.chooseCell(0);
-    //     let newCell = random(emptyCells);
-        
-    //     if (newCell) {
-    //         let x = newCell[0]
-    //         let y = newCell[1]
-    //         matrix[y][x] = 1
-    //         var gr = new Grass(x, y)
-    //         grassArr.push(gr)
-    //         grassHashiv++
-    //         this.energy -= 10
-    //         // console.log("man's on");
-    //     }
-    // }
     die() {
         matrix[this.y][this.x] = 0
         for (var i in manArr) {
